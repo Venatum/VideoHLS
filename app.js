@@ -19,6 +19,14 @@ const argv = yargs(hideBin(process.argv))
         demandOption: true,
         coerce: path.resolve
     })
+    .option('ffmpeg', {
+        type: 'string',
+        description: 'Path to ffmpeg',
+    })
+    .option('ffprobe', {
+        type: 'string',
+        description: 'Path to ffmpeg',
+    })
     .option('verbose', {
         alias: 'v',
         type: 'boolean',
@@ -36,9 +44,6 @@ const argv = yargs(hideBin(process.argv))
 const { whereis, myExec } = require("./src/cmd")
 const { generateHLS } = require("./src/ffmpeg");
 const M3u8 = require('./src/m3u8');
-
-const FFMPEG = whereis("ffmpeg");
-const FFPROBE = whereis("ffprobe");
 
 function getMediaInfos(input) {
     // ffprobe -v error -print_format json -show_entries stream=index,codec_name,codec_type -show_entries stream_tags MOVIE
@@ -90,14 +95,22 @@ function main() {
     if (!fs.existsSync(outputDir)) {
         fs.mkdirSync(outputDir);
     }
+
+    const FFMPEG = (argv.ffmpeg) ? argv.ffmpeg : whereis("ffmpeg");
     if (!FFMPEG) {
         console.error("ffmpeg not found!");
         process.exit(1)
     }
+    if (argv.verbose)
+        console.log("You are using ffmpeg from:", FFMPEG);
+
+    const FFPROBE = (argv.ffprobe) ? argv.ffprobe : whereis("ffprobe");
     if (!FFPROBE) {
         console.error("ffprobe not found!");
         process.exit(1)
     }
+    if (argv.verbose)
+        console.log("You are using ffprobe from:", FFPROBE);
 
     const infos = getMediaInfos(inputPath);
     const data = generateHLS(outputDir, inputPath, infos, FFMPEG, argv.verbose);

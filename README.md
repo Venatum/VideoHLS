@@ -24,9 +24,11 @@ Options:
       --version  Show version number                                   [boolean]
   -i, --input    Path to your video                          [string] [required]
   -o, --output   Output directory path                       [string] [required]
+      --ffmpeg   Path to ffmpeg                                         [string]
+      --ffprobe  Path to ffmpeg                                         [string]
   -v, --verbose  Run with verbose logging                              [boolean]
   -h, --help     Show help                                             [boolean]
-  
+
 # Example
 $> npm run start -- -i bbb.mkv -o media/bbb -v
 ```
@@ -40,5 +42,6 @@ npx http-server --cors="*" -c-1 .
 ```
 
 ## License
+>You can check out the full license [here](LICENSE)
 
-[MIT](./LICENCSE)
+This project is licensed under the terms of the **MIT** license.
