@@ -1,0 +1,14 @@
+{
+  "name": "hls",
+  "version": "1.0.0",
+  "description": "Video to HLS",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "author": "Vincent LE QUEC",
+  "license": "ISC",
+  "dependencies": {
+    "yargs": "^17.0.1"
+  }
+}
