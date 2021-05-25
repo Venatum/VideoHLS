@@ -45,7 +45,7 @@ const { whereis, myExec } = require("./src/cmd")
 const { generateHLS } = require("./src/ffmpeg");
 const M3u8 = require('./src/m3u8');
 
-function getMediaInfos(input) {
+function getMediaInfos(input, FFPROBE) {
     // ffprobe -v error -print_format json -show_entries stream=index,codec_name,codec_type -show_entries stream_tags MOVIE
     let infos = myExec(FFPROBE, `-v error -print_format json -show_entries stream=index,codec_name,codec_type -show_entries stream_tags ${ input }`)
     return JSON.parse(infos);
@@ -112,7 +112,7 @@ function main() {
     if (argv.verbose)
         console.log("You are using ffprobe from:", FFPROBE);
 
-    const infos = getMediaInfos(inputPath);
+    const infos = getMediaInfos(inputPath, FFPROBE);
     const data = generateHLS(outputDir, inputPath, infos, FFMPEG, argv.verbose);
     processHLS(outputDir, data);
 }

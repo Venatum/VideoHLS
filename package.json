@@ -1,5 +1,5 @@
 {
-  "name": "hls",
+  "name": "videohls",
   "version": "1.0.0",
   "description": "Video to HLS",
   "main": "app.js",
